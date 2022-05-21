@@ -1,6 +1,6 @@
 from pytest import raises
 
-from logic import Cafe, DrinkNotInMenu
+from logic import Cafe, DrinkNotInMenu, MoneyNotEnough
 
 
 def test_should_return_tea_and_the_change_of_30_baht_when_buying_tea_with_50_baht():
@@ -19,3 +19,9 @@ def test_should_raise_DrinkNotInMenu_when_buying_cocoa():
     cafe = Cafe()
     with raises(DrinkNotInMenu):
         cafe.buy("cocoa", 50.0)
+
+
+def test_should_raise_MoneyNotEnough_when_buying_coffee_with_1_baht():
+    cafe = Cafe()
+    with raises(MoneyNotEnough):
+        cafe.buy("coffee", 1.0)
