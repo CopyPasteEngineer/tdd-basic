@@ -20,8 +20,7 @@ class Cafe:
 
     def _validate_drink(self, drink):
         if drink == "surprise":
-            self._randomly_select(["tea", "coffee"])
-            drink = "coffee"
+            drink = self._randomly_select(["tea", "coffee"])
         if drink not in self.PRICE:
             raise DrinkNotInMenu()
         return drink

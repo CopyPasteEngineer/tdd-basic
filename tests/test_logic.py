@@ -28,12 +28,22 @@ def test_should_raise_MoneyNotEnough_when_buying_coffee_with_1_baht():
 
 
 def test_should_randomly_select_a_drink_between_tea_and_coffee_when_buying_surprise():
-    random_mock = RandomlySelectMock()
+    random_mock = RandomlySelectMock(return_value="coffee")
     cafe = Cafe(randomly_select=random_mock)
     cafe.buy("surprise", 100.0)
     assert random_mock.is_called_with_choices == ["tea", "coffee"]
 
 
+def test_should_use_randomly_selected_drink_when_buying_surprise():
+    cafe = Cafe(randomly_select=RandomlySelectMock(return_value="tea"))
+    drink, _ = cafe.buy("surprise", 60.0)
+    assert drink == "tea"
+
+
 class RandomlySelectMock:
+    def __init__(self, return_value=None):
+        self._return_value = return_value
+
     def __call__(self, choices):
         self.is_called_with_choices = choices
+        return self._return_value
