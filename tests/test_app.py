@@ -1,5 +1,5 @@
 from app import CafeApp
-from logic import DrinkNotInMenu
+from logic import DrinkNotInMenu, MoneyNotEnough
 
 
 def test_should_call_cafe_buy():
@@ -21,6 +21,13 @@ def test_should_display_message_when_DrinkNotInMenu_is_raised():
     app = CafeApp(cafe=CafeMock(error=DrinkNotInMenu()), display=display)
     app.buy("cocoa", 100.0)
     assert display.displayed_text == "Sorry. We don't have cocoa."
+
+
+def test_should_display_message_when_MoneyNotEnough_is_raised():
+    display = DisplayMock()
+    app = CafeApp(cafe=CafeMock(error=MoneyNotEnough()), display=display)
+    app.buy("coffee", 5.0)
+    assert display.displayed_text == "Sorry. 5.0 Baht is not enough for coffee."
 
 
 class DisplayMock:
